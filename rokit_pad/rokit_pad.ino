@@ -1,5 +1,5 @@
 /*
-	Cupdrone Remote
+	RokitDrone Remote
 
 	Made by Baram ( chcbaram@paran.com )
 */
