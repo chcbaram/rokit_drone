@@ -136,6 +136,134 @@ public class CoDroneClass {
     Send_Command(cType_Request, Req_Attitude);    
   }
 
+
+  void Request_DroneGyroBias()
+  {
+    Send_Command(cType_Request, Req_GyroBias);    
+  }
+  void Request_TrimAll()
+  {
+    sendCheckFlag = 1;
+    Send_Command(cType_Request, Req_TrimAll);    
+  }
+  void Request_TrimFlight()
+  {
+    Send_Command(cType_Request, Req_TrimFlight);    
+  }
+  void Request_TrimDrive()
+  {
+    Send_Command(cType_Request, Req_TrimDrive);    
+  }
+  void Request_ImuRawAndAngle()
+  {
+    Send_Command(cType_Request, Req_ImuRawAndAngle);    
+  }
+  void Request_Pressure()
+  {
+    Send_Command(cType_Request, Req_Pressure);    
+  }
+  void Request_ImageFlow()
+  {
+    Send_Command(cType_Request, Req_ImageFlow);    
+  }
+  void Request_Button()
+  {
+    Send_Command(cType_Request, Req_Button);    
+  }
+  void Request_Battery()
+  {
+    Send_Command(cType_Request, Req_Batery);    
+  }
+  void Request_Motor()
+  {
+    Send_Command(cType_Request, Req_Motor);    
+  }
+  void Request_Temperature()
+  {
+    Send_Command(cType_Request, Req_Temperature);    
+  }
+
+  void DroneModeChange(byte event)
+  {
+      sendCheckFlag = 1;
+      Send_Command(cType_ModeDrone, event);
+      delay(300);
+  }
+
+  void FlightEvent(byte event)
+  {
+    sendCheckFlag = 1;
+    Send_Command(cType_FlightEvent, event);
+  }
+
+  void Control(int interval)
+  {
+      if (TimeCheck(interval))  //delay
+      {
+        Control();
+        PreviousMillis = millis();
+      }
+  }
+
+  void Control()
+  {  
+    byte[] _packet = new byte[10];
+    byte[] _crc = new byte[2];
+    
+    byte _cType = dType_Control;
+    byte _len = 4;
+    
+    //header
+    _packet[0] = _cType;
+    _packet[1] = _len;
+  
+    //data
+    _packet[2] = byte(roll);
+    _packet[3] = byte(pitch);
+    _packet[4] = byte(yaw);
+    _packet[5] = byte(throttle);
+  
+    int crcCal = CRC16_Make(_packet, _len+2);
+    crcCal = crcCal & 0xFFFF;
+    _crc[0] = byte((crcCal >> 8) & 0xff);
+    _crc[1] = byte(crcCal & 0xff);
+    
+    Send_Processing(_packet,_len,_crc);  
+    
+    roll = 0;
+    pitch = 0;
+    yaw = 0;
+    throttle = 0;
+    
+    ////////////////////////////////////////////
+    sendCheckFlag = 0;
+    ////////////////////////////////////////////
+    
+    Send_Check(_packet,_len,_crc);
+    
+    /*
+    if(sendCheckFlag == 1)
+    {
+      timeOutSendPreviousMillis = millis();
+      
+       while(sendCheckFlag != 3)
+       {
+         while(!TimeOutSendCheck(3))
+        {
+          Receive();
+          if(sendCheckFlag == 3) break;
+        }
+        if(sendCheckFlag == 3) break;
+              
+        Send_Processing(_packet,_len,_crc);
+       }
+      sendCheckFlag = 0;
+    }
+    */
+  ///////////////////////////////////////////  
+  }
+
+
   void Receive()
   {    
     /*

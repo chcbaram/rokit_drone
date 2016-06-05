@@ -81,7 +81,29 @@ byte cType_Request              = byte(0x90); ///< 지정한 타입의 데이터
 
 
 
+byte  cType_None = byte(0x00);                 ///< 이벤트 없음
+  
+  // 설정  
+byte  cType_ModeDrone = byte(0x10);         ///< 드론 동작 모드 전환
+  
+  // 제어
+byte  cType_Coordinate = byte(0x20);         ///< 방위 기준 변경
+byte  cType_Trim = byte(0x21);                     ///< 트림 변경
+byte  cType_FlightEvent = byte(0x22);               ///< 비행 이벤트 실행
+byte  cType_DriveEvent = byte(0x23);               ///< 주행 이벤트 실행
+byte  cType_Stop = byte(0x24);                     ///< 정지
+byte  cType_ResetHeading = byte(0x50);       ///< 방향을 리셋(앱솔루트 모드 일 때 현재 heading을 0도로 변경)
+byte  cType_ClearGyroBiasAndTrim = byte(0x51);     ///< 자이로 바이어스와 트림 설정 초기화
+  
+  // 통신
+byte  cType_PairingActivate = byte(0x80);   ///< 페어링 활성화
+byte  cType_PairingDeactivate = byte(0x81);         ///< 페어링 비활성화
+byte  cType_TerminateConnection = byte(0x82);       ///< 연결 종료
+  
 
+  
+
+  
 
 byte  dMode_None                = byte(0);    ///< 없음
 byte  dMode_Flight              = byte(0x10); ///< 비행 모드(가드 포함)
@@ -135,23 +157,23 @@ byte  cSet_Relative             = byte(2);     ///< 상대 좌표계
 
 
 
-byte    linkEvent_None  = byte(0);                  ///< 없음
+byte    linkEvent_None          = byte(0);                  ///< 없음
     
-byte    linkEvent_SystemReset = byte(1);             ///< 시스템 리셋
+byte    linkEvent_SystemReset   = byte(1);             ///< 시스템 리셋
     
-byte    linkEvent_Initialized = byte(2);              ///< 장치 초기화 완료
+byte    linkEvent_Initialized   = byte(2);              ///< 장치 초기화 완료
     
-byte    linkEvent_Scanning = byte(3);                 ///< 장치 검색 시작
-byte    linkEvent_ScanStop = byte(4);                 ///< 장치 검색 중단
+byte    linkEvent_Scanning      = byte(3);                 ///< 장치 검색 시작
+byte    linkEvent_ScanStop      = byte(4);                 ///< 장치 검색 중단
 
 byte    linkEvent_FoundDroneService = byte(5);       ///< 드론 서비스 검색 완료
 
-byte    linkEvent_Connecting = byte(6);                ///< 장치 연결 시작    
-byte    linkEvent_Connected = byte(7);                ///< 장치 연결
+byte    linkEvent_Connecting        = byte(6);                ///< 장치 연결 시작    
+byte    linkEvent_Connected         = byte(7);                ///< 장치 연결
 
-byte    linkEvent_ConnectionFaild = byte(8);         ///< 연결 실패
-byte    linkEvent_ConnectionFaildNoDevices = byte(9); ///< 연결 실패 - 장치가 없음
-byte    linkEvent_ConnectionFaildNotReady = byte(10);  ///< 연결 실패 - 대기 상태가 아님
+byte    linkEvent_ConnectionFaild           = byte(8);         ///< 연결 실패
+byte    linkEvent_ConnectionFaildNoDevices  = byte(9); ///< 연결 실패 - 장치가 없음
+byte    linkEvent_ConnectionFaildNotReady   = byte(10);  ///< 연결 실패 - 대기 상태가 아님
 
 byte    linkEvent_PairingStart = byte(11);              ///< 페어링 시작
 byte    linkEvent_PairingSuccess = byte(12);            ///< 페어링 성공
@@ -209,4 +231,22 @@ byte  Req_Button = byte(0x53);                 ///< 버튼 입력
 byte  Req_Batery = byte(0x54);                 ///< 배터리
 byte  Req_Motor = byte(0x55);                   ///< 모터 제어 및 현재 제어 값 확인
 byte  Req_Temperature = byte(0x56);             ///< 온도
+ 
+ 
+ 
+byte  fEvent_None = byte(0);       ///< 없음
+byte  fEvent_TakeOff = byte(1);       ///< 이륙
+byte  fEvent_FlipFront = byte(2);     ///< 회전
+byte  fEvent_FlipRear = byte(3);       ///< 회전
+byte  fEvent_flipLeft = byte(4);       ///< 회전
+byte  fEvent_FlipRight = byte(5);     ///< 회전
+byte  fEvent_Stop = byte(6);           ///< 정지
+byte  fEvent_Landing = byte(7);       ///< 착륙
+byte  fEvent_TurnOver = byte(8);       ///< 뒤집기
+byte  fEvent_Shot = byte(9);           ///< 미사일을 쏠 때 움직임
+byte  fEvent_UnderAttack = byte(10);   ///< 미사일을 맞을 때 움직임
+byte  fEvent_Square = byte(11);         ///< 정방향 돌기
+byte  fEvent_CircleLeft = byte(12);     ///< 왼쪽으로 회전
+byte  fEvent_CircleRight = byte(13);   ///< 오른쪽으로 회전
+byte  fEvent_Rotate180 = byte(14);      ///< 180도 회전
  

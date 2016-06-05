@@ -414,18 +414,56 @@ void serialEvent(Serial p) {
 void CoDroneMain()
 {
   int i;
+  int tTime;
   
   CoDrone.begin(115200);
   CoDrone.AutoConnect(NearbyDrone);
+  CoDrone.DroneModeChange(dMode_Flight); 
   
+  CoDrone.roll = 0;
+  CoDrone.pitch = 0;
+  
+  CoDrone.Control();                  
+  delay(100);
+  
+  
+  CoDrone.FlightEvent(fEvent_TakeOff);
+  delay(2000);      
+  
+  CoDrone.roll = 100;
+  CoDrone.Control(); 
+  delay(400);        
+
+  CoDrone.pitch = -100;
+  CoDrone.Control();   
+  delay(500);          
+
+  CoDrone.roll = -100; 
+  CoDrone.Control();   
+  delay(500);          
+  
+  
+  CoDrone.FlightEvent(fEvent_Landing);   
+  
+  
+  /*
   //for( i=0; i<10; i++ )
   while(true)
   {
-    CoDrone.Request_DroneAttitude();
+    //CoDrone.Request_DroneAttitude();
+    delay(50);
+    CoDrone.Request_ImageFlow();
     delay(50);
     if( serial_port == null ) break;
+    
+    for( i=0; i<8; i++ )
+    {      
+      print(CoDrone.droneImageFlow[i]);
+      print(" ");      
+    }
+    println("");
   }
-  
+  */
   delay(2000);
   println("end");
 }
